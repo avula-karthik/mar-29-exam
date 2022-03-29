@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import ShowUser from './ShowUser';
 const Login = () => {
     let [data, setData] = useState();
     const checkLogin = (e) => {
@@ -8,21 +9,14 @@ const Login = () => {
         let password = e.target.password.value;
         axios
             .get(`/assignment/checklogin/${username}/${password}`)
-            .then((res) => setData(JSON.stringify(res.data)))
-            .catch((e) => console.log(e));
-    };
-    const showCurrentUserDetails = () => {
-        setData('First Login with correct info');
-        axios
-            .get('/showusers')
             .then((res) => {
-                setData(JSON.stringify(res.data.results[0]));
+                console.log(res.data);
             })
             .catch((e) => console.log(e));
     };
+    
     return (
         <div>
-            {data}
             <form className='form' onSubmit={checkLogin}>
                 <h1>Login</h1>
                 <label>
@@ -46,14 +40,6 @@ const Login = () => {
                     <button className='btn btn-primary'>Login</button>
                 </div>
             </form>
-            <div>
-                <button
-                    className='btn btn-info'
-                    onClick={showCurrentUserDetails}
-                >
-                    show user details
-                </button>
-            </div>
         </div>
     );
 };
